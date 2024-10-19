@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Production Analysis</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .navbar {
+            background-color: black;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+        }
+        .navbar-nav {
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 1500px;
+            max-width: 1700px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .heading {
+            font-weight: bold;
+            color: green;
+        }
+        .btn-red {
+            background-color: red;
+            color: white;
+        }
+        #map-container {
+            margin-top: 20px;
+            margin-bottom:20px;
+            height: 500px;
+            border: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/">Crop Analysis</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="/prodction_analysis">Production Analysis</a></li>
+                <li class="nav-item"><a class="nav-link" href="/heatmap_analysis">Heatmap Analysis</a></li>
+                <li class="nav-item"><a class="nav-link" href="/season_analysis">Season Analysis</a></li>
+                <li class="nav-item"><a class="nav-link" href="/crop_analysis">Geospatial Analysis</a></li>
+                <li class="nav-item"><a class="nav-link" href="/combined_analysis">Combined Analysis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="heading">Crop Production Analysis</h2>
+        <form method="POST" action="/prodction_analysis">
+            <div class="form-group">
+                <label for="crop_type">Select Crop Type:</label>
+                <select class="form-control" id="crop_type" name="crop_type">
+                    <option value="">Select Crop</option>
+                    {% for crop in crop_options %}
+                    <option value="{{ crop }}" {% if crop == selected_crop %}selected{% endif %}>{{ crop }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Analyze</button>
+        </form>
+
+        <div id="map-container">
+            {{ map_html | safe }}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
